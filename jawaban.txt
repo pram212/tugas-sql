@@ -1,0 +1,68 @@
+1. Buat database 
+	CREATE DATABASE Myshop;
+----------------------------------------------------------------------------------------
+2. Buat Tabel
+	use Myshop;
+	
+	CREATE TABLE users ( 
+	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL,
+	`email` VARCHAR(255) NULL,
+	`password` VARCHAR(255) NULL
+	 );
+	------------------------------------------------------------
+	
+	use Myshop;
+
+	CREATE TABLE categories ( 
+	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL
+	 );
+
+	------------------------------------------------------------
+	use Myshop;
+
+	CREATE TABLE items ( 
+	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL,
+	`description` VARCHAR(225),
+	`price` INT,
+	`stock` INT,
+	`category_id` INT,
+	FOREIGN KEY (category_id) REFERENCES categories(id)
+	 );
+----------------------------------------------------------------------------------------
+3. Menambahkan data pada masing-masing tabel
+	INSERT INTO `users` (`id`, `name`, `email`, `password`) 
+		VALUES 
+	(NULL, 'John Doe', 'john@doe.com', 'john123'), 
+	(NULL, 'Jane Doe', 'jane@doe.com', 'jenita123');
+	------------------------------------------------------------
+	INSERT INTO `categories` (`id`, `name`) 
+		VALUES 
+	(NULL, 'gadget'), 
+	(NULL, 'cloth'),
+	(NULL, 'men'),
+	(NULL, 'women'),
+	(NULL, 'branded');
+	------------------------------------------------------------
+	INSERT INTO `items` (`id`, `name`, `description`, `price`, `stock`, `category_id`) 
+		VALUES 
+	(NULL, 'Sumsang b50', 'hape keren dari merek sumsang', 4000000, 100, 1), 
+	(NULL, 'Uniklooh', 'baju keren dari brand ternama', 500000, 50, 2),
+	(NULL, 'IMHO Watch', 'jam tangan anak yang jujur banget', 2000000, 10, 1);
+----------------------------------------------------------------------------------------
+4. Mengambil data dari database
+	a. mengambil data user 
+		SELECT id, name, email FROM users;
+	b. mengambil data item
+		SELECT * FROM items WHERE price >= 1000000;
+		SELECT * FROM items WHERE name LIKE '%uniklo%';
+	c. menampilkan items join
+		SELECT items.name, items.description, items.price, items.stock, items.category_id, categories.name AS kategori
+		FROM items
+		INNER JOIN categories
+		ON items.category_id=categories.id;
+----------------------------------------------------------------------------------------
+5. Mengubah data dari database
+	UPDATE `items` SET `name` = 'sumsang', `price` = 2500000 WHERE `id` = 1;
